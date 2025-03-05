@@ -1,22 +1,31 @@
 import Image from "next/image";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
+import TextExpander from "@/app/_components/TextExpander";
+import DateSelector from "@/app/_components/DateSelector";
+import ReservationForm from "@/app/_components/ReservationForm";
 
 // This function gets called at build time. Provides props to your page.
-// It will create static pages for each cabin. 
+// It will create static pages for each cabin.
 // Ex., if you have 3 cabins, it will create 3 pages ---- /cabins/1, /cabins/2, /cabins/3
 export async function generateStaticParams() {
   const cabins = await getCabins();
   return cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
 }
 
-export async function generateMetadata({ params }) {
-  const cabin = await getCabin(params.cabinId);
+export async function generateMetadata(context) {
+  const params = await context.params;
+  const { cabinId } = params;
+
+  const cabin = await getCabin(cabinId);
   return { title: `Cabin ${cabin.name}` };
 }
 
-export default async function Page({ params }) {
-  const cabin = await getCabin(params.cabinId);
+export default async function Page(context) {
+  const params = await context.params;
+  const { cabinId } = params;
+
+  const cabin = await getCabin(cabinId);
 
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
@@ -38,7 +47,9 @@ export default async function Page({ params }) {
             Cabin {name}
           </h3>
 
-          <p className="text-lg text-primary-300 mb-10">{description}</p>
+          <p className="text-lg text-primary-300 mb-10">
+            <TextExpander>{description}</TextExpander>
+          </p>
 
           <ul className="flex flex-col gap-4 mb-7">
             <li className="flex gap-3 items-center">
@@ -67,8 +78,13 @@ export default async function Page({ params }) {
 
       <div>
         <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+          Reserve {cabin.name} today. Pay on arrival.
         </h2>
+
+        <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
+          <DateSelector />
+          <ReservationForm />
+        </div>
       </div>
     </div>
   );
