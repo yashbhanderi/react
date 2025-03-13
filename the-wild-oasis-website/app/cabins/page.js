@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
 import CabinList from "../_components/CabinList";
 import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 // This below is optional. If you want to use ISR (Incremental Static Regeneration) for this page, you can set the revalidate value.
 // This will make sure that the page is regenerated after the specified time.
@@ -44,6 +45,7 @@ export default async function Page({ searchParams }) {
         key={filter}
       >
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
