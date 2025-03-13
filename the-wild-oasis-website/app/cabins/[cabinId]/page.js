@@ -2,8 +2,6 @@ import Image from "next/image";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import TextExpander from "@/app/_components/TextExpander";
-import DateSelector from "@/app/_components/DateSelector";
-import ReservationForm from "@/app/_components/ReservationForm";
 
 // This function gets called at build time. Provides props to your page.
 // It will create static pages for each cabin.
@@ -80,11 +78,6 @@ export default async function Page(context) {
         <h2 className="text-5xl font-semibold text-center">
           Reserve {cabin.name} today. Pay on arrival.
         </h2>
-
-        <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
-          <DateSelector />
-          <ReservationForm />
-        </div>
       </div>
     </div>
   );
