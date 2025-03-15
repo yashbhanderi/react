@@ -9,7 +9,7 @@ import ReservationReminder from "../_components/ReservationReminder";
 // If this is zero, the page will be regenerated on every request.
 // If this is not set, the page will be generated at build time and will not be regenerated.
 // This is useful if you want to update the page content after some time.
-export const revalidate = 50;
+export const revalidate = 20;
 
 export const metadata = {
   title: "Cabins",
@@ -34,7 +34,7 @@ export default async function Page({ searchParams }) {
       </p>
 
       <div className="flex justify-end mb-8">
-        <Filter />
+        <Filter currentFilter={filter} />
       </div>
 
       <Suspense
